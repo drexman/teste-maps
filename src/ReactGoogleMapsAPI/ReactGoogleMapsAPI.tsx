@@ -33,7 +33,7 @@ const circleOptions = {
   draggable: false,
   editable: false,
   visible: true,
-  radius: 50000,
+  radius: 9000,
   zIndex: 1
 } as const
 
@@ -43,7 +43,7 @@ export function ReactGoogleMapsAPI() {
   })
 
   if (!isLoaded) return <div>Loading...</div>;
-  return <MapWithPolygonV2 />;
+  return <MapWithCircle />;
 }
 
 function MapWithPolygon() {
@@ -174,6 +174,8 @@ function MapWithCircle() {
         options={circleOptions}
         onLoad={onLoad}
         onUnmount={onUnmount}
+        editable
+        draggable
       />
     </GoogleMap>
   )
