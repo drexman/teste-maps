@@ -10,9 +10,9 @@ interface Coordinates {
 }
 
 const polygonOptions = {
-  fillColor: "#00000020",
+  fillColor: "rgb(216, 191, 255)",
   fillOpacity: 1,
-  strokeColor: "#FF0000",
+  strokeColor: "rgb(47, 0, 114)",
   strokeOpacity: .15,
   strokeWeight: 1,
   clickable: true,
@@ -24,10 +24,10 @@ const polygonOptions = {
 } as const
 
 const circleOptions = {
-  strokeColor: '#FF0000',
+  strokeColor: 'rgb(47, 0, 114)',
   strokeOpacity: 0.8,
   strokeWeight: 2,
-  fillColor: '#FF0000',
+  fillColor: 'rgb(216, 191, 255)',
   fillOpacity: 0.35,
   clickable: false,
   draggable: false,
