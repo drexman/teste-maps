@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const apiKey: string = 'AIzaSyA-qm42bToshX0BMcK_57V33l9omMszx8U';
 
-export type Coordenate = {
+export type Coordinate = {
   lat: number,
   lng: number,
 }
@@ -21,26 +21,51 @@ export function ReactGoogleDrawingManager() {
 
 function MapWithDrawingManager () {
 
-  const [polys, setPolys] = useState<Array<Coordenate>>([]);
+  const [polys, setPolys] = useState<Array<Coordinate>>([]);
 
   const polygonOptions = {
     fillOpacity: 0.3,
-    fillColor: '#ff0000',
-    strokeColor: '#ff0000',
+    fillColor: 'rgb(216, 191, 255)',
+    strokeColor: 'rgb(47, 0, 114)',
     strokeWeight: 2,
     draggable: true,
     editable: true
 }
 
 const drawingManagerOptions = {
-    polygonOptions: polygonOptions,
+    drawingMode: polygonOptions,
     drawingControl: true,
     drawingControlOptions: {
         position: window.google?.maps?.ControlPosition?.TOP_CENTER,
         drawingModes: [
-            window.google?.maps?.drawing?.OverlayType?.POLYGON
+          google.maps.drawing.OverlayType.MARKER,
+            google.maps.drawing.OverlayType.CIRCLE,
+            google.maps.drawing.OverlayType.POLYGON,
+            google.maps.drawing.OverlayType.POLYLINE,
+            google.maps.drawing.OverlayType.RECTANGLE
         ]
     },
+    circleOptions: {
+      fillColor: 'rgb(216, 191, 255)',
+      fillOpacity: 0.3,
+      strokeWeight: 2,
+      strokeColor: 'rgb(47, 0, 114)',
+      clickable: true,
+      editable: true,
+
+    },
+
+    polygonOptions: {
+      fillOpacity: 0.3,
+      fillColor: 'rgb(216, 191, 255)',
+      strokeColor: 'rgb(47, 0, 114)',
+      strokeWeight: 2,
+      draggable: true,
+      editable: true
+      
+    }
+
+
 }
 
   const center = { lat: 52.52047739093263, lng: 13.36653284549709 }
@@ -51,10 +76,13 @@ const drawingManagerOptions = {
 
   const onPolygonComplete = (polygon : google.maps.Polygon) => {
     const polyArray =  polygon.getPath().getArray();
-    let paths = [];
+    let va = [];
+    
     polyArray.forEach((path: google.maps.LatLng) => {
-      paths.push({ lat: path.lat(), lng: path.lng });
+      va.push({ lat: path.lat(), lng: path.lng });
     }) 
+
+    console.log(paths);
   }
 
   return (
