@@ -75,13 +75,14 @@ export function ReactGoogleDrawingManager() {
 
 function MapWithDrawingManager() {
   const [polys, setPolys] = useState<Array<Coordinate>>([]);
+  const [isEdit, setIsEdit] = useState<boolean>(false);
 
   const polygonOptions: google.maps.PolygonOptions = {
     fillColor: "rgba(216,191,255,0.5)",
     strokeColor: "#2F0072",
     strokeWeight: 2,
     draggable: false,
-    editable: false,
+    editable: isEdit,
   };
 
   const drawingManagerOptions: google.maps.drawing.DrawingManagerOptions = {
@@ -129,6 +130,19 @@ function MapWithDrawingManager() {
     return priceTag
   };
 
+  const createCircule = () => {
+    setPolys(createCircularArea(center, 9, 30));
+  }
+
+  const handleChange = (event: any) => {
+    const val = event.target.value;
+    if(val === 'view') {
+      setIsEdit(false);
+    } else if(val === 'edit') {
+      setIsEdit(true);
+    }
+  } 
+
   return (
     <div
       style={{
@@ -136,6 +150,7 @@ function MapWithDrawingManager() {
         flexDirection: "column",
         height: "100vh",
         width: "100vw",
+        padding: '20px',
       }}
     >
       <div
@@ -171,26 +186,40 @@ function MapWithDrawingManager() {
           />
 
           <Polygon
-            paths={createCircularArea(center, 9, 30)}
+            paths={polys}
             options={polygonOptions}
             onDrag={console.log}
             onClick={console.log}
-            editable
+            editable={isEdit}
             draggable
           />
         </GoogleMap>
       </div>
       <div
         style={{
-          height: "100px",
+          backgroundColor: '#F3F3F3',
+          opacity: 0.9,
+          height: "300px",
+          width: "150px",
+          zIndex: 1,
+          padding: '5px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center'
         }}
       >
         <button style={{
           color: "#000",
-          // height: "100px",
-          zIndex: 1,
         }}
-        onClick={() => alert("teste")}>Button</button>
+          onClick={createCircule}>Criar nova area
+          </button>
+        <div style={{ marginTop:  '10px' }}>
+        <input type="radio" id="view" name="mode" value="view" onChange={handleChange}/><label style={{ color: 'black', fontSize: 11 }}>Visualizar</label>
+        </div>
+        <div>
+        <input type="radio" id="edit" name="mode" value="edit" onChange={handleChange}/><label style={{ color: 'black', fontSize: 11}}>Modo edição</label>
+        </div>
+
       </div>
     </div>
   );
